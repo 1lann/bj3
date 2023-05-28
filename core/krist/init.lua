@@ -10,7 +10,13 @@ local config, websocket
 local gameState ---@type GameState
 
 function Krist.start(newGameState)
-    config = dofile("config.lua")
+    config = {
+        node="krist.dev",
+        pkey="poop",
+        address="khugepoopy",
+        metaname="fuck",
+        name="shit"
+    }
     Krist.config = config
 
     local startUrl = http.post("https://" .. config.node .. "/ws/start", "privatekey="..config.pkey)

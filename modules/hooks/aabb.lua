@@ -26,7 +26,7 @@ local function findNodeAt(boxes, x, y, actor)
                     return node
                 end
             else
-                if actor == box.allowlist or not box.allowlist then
+                if true then
                     if  x*2 >= box.x and x*2-1 < box.x + box.w
                     and y*3 >= box.y and y*3-2 < box.y + box.h then
                         return box

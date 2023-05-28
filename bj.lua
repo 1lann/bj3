@@ -11,6 +11,7 @@ auth.initialize(display.mon)
 local Solyd = require("modules.solyd")
 local hooks = require("modules.hooks")
 local useCanvas = hooks.useCanvas
+local wallets = require("modules.wallet")
 
 local BasicText = require("components.BasicText")
 local BigText = require("components.BigText")
@@ -93,7 +94,7 @@ local Main = Solyd.wrapComponent("Main", function(props)
 
         Dealer {},
 
-        BasicText { 
+        BasicText {
             text = "Click a spot to join, then to deposit run /pay " .. Krist.config.metaname .. "@" .. Krist.config.name .. ".kst <amount>",
             align = "center",
             width = canvas.width/2,
@@ -169,6 +170,14 @@ Krist.start(gameState)
 
 local deltaTimer = os.startTimer(0)
 GameRunner.launchGame(gameState, function()
+    local wallet1 = wallets.getWallet("1")
+    wallet1.balance = wallet1.balance + 1000
+    local wallet2 = wallets.getWallet("2")
+    wallet2.balance = wallet2.balance + 1000
+    local wallet3 = wallets.getWallet("3")
+    wallet3.balance = wallet3.balance + 1000
+    gameState:resetTimeouts(true)
+
     while true do
         tree = Solyd.render(tree, Main {t = t, gameState = gameState})
 

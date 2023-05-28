@@ -80,7 +80,7 @@ return Solyd.wrapComponent("PlayerSlot", function(props)
 
     local emptySprite = Solyd.useMemo(function()
         local canv = PixelCanvas(props.width, props.height)
-        
+
         canv:drawCanvas(
             playerSlotEmpty,
             (props.width - playerSlotEmpty.width)/2,
@@ -92,7 +92,7 @@ return Solyd.wrapComponent("PlayerSlot", function(props)
 
     local hitSprite = Solyd.useMemo(function()
         local canv = PixelCanvas(props.width, props.height)
-        
+
         canv:drawRect(clearColor, 1, 1, props.width, props.height) --drawCanvas(playerSlotEmpty, (props.width - playerSlotEmpty.width)/2, 25)
 
         return canv
@@ -114,7 +114,7 @@ return Solyd.wrapComponent("PlayerSlot", function(props)
     elseif #cards ~= #afCards and not gameState.running then
         afCards = setAfCards({})
     end
-    -- local h = 
+    -- local h =
     -- if isFilled then
     --     h = nil
     -- end
@@ -207,7 +207,7 @@ return Solyd.wrapComponent("PlayerSlot", function(props)
 
                 playerName, playerBalance,
 
-                BigText { 
+                BigText {
                     text = "Bet: \164" .. tostring(pendingBet),
                     x = props.x + 2 + 32,
                     y = y + 2,
@@ -277,7 +277,7 @@ return Solyd.wrapComponent("PlayerSlot", function(props)
                 --         setPendingBet(pendingBet + 10)
                 --     end,
                 -- },
-        
+
                 -- balance >= 25 and ChipStack {
                 --     x = props.x + 8 + 10*6,
                 --     y = y + props.height - 32,
@@ -288,7 +288,7 @@ return Solyd.wrapComponent("PlayerSlot", function(props)
                 --         setPendingBet(pendingBet + 25)
                 --     end,
                 -- },
-        
+
                 -- balance >= 100 and ChipStack {
                 --     x = props.x + 8 + 10*8,
                 --     y = y + props.height - 32,
@@ -387,7 +387,6 @@ return Solyd.wrapComponent("PlayerSlot", function(props)
                     bg = canAct and colors.red,
                     color = colors.white,
                     onClick = function(clicker)
-                        if clicker.id ~= player.entity.id then return end
                         -- setStood(true)
                         player.input = "stand"
                     end,
@@ -472,16 +471,20 @@ return Solyd.wrapComponent("PlayerSlot", function(props)
         }
     elseif not gameState.running then
         return {
-             
+
                 -- key = "waiting",
-                -- children = 
+                -- children =
                 Sprite { sprite = emptySprite, x = x, y = y },
-            
+
         }, {
             -- canvas = canvas,
             aabb = useBoundingBox(x, y, emptySprite.width, emptySprite.height, function(entity)
                 -- table.insert(gameState.players, { hand = {} })
                 -- setPlayerId(#gameState.players)
+                entity = {
+                    name = tostring(playerId),
+                    id = tostring(playerId)
+                }
                 gameState.players[playerId] = { entity = entity, hands = { {} }, activeHand = 1 }
                 -- setFilled(true)
                 -- setCards({ table.remove(dealerContext.deck, 1), table.remove(dealerContext.deck, 1) })
@@ -489,16 +492,16 @@ return Solyd.wrapComponent("PlayerSlot", function(props)
         }
     else
         return {
-             
+
             -- key = "waiting",
-            -- children = 
+            -- children =
             -- Sprite { sprite = emptySprite, x = x, y = y }
-            -- BigText { 
-            --     text = "Game is in session...", 
-            --     x = x, 
+            -- BigText {
+            --     text = "Game is in session...",
+            --     x = x,
             --     y = y + props.height / 2 - 6,
             --     width = props.width,
-            --     color = colors.white, 
+            --     color = colors.white,
             --     bg = colors.green
             -- }
         } --, {

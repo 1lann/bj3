@@ -1,7 +1,7 @@
 local sensor = peripheral.find("manipulator")
 
 local monitorWidth, monitorHeight -- = monitor.getSize()
-local disabled = false
+local disabled = true
 
 -- Some experimental values good enough to just calculate the monitor plane since we can snap to blocks
 -- These are mutated later to be exact, these are NOT constants!!!
@@ -253,7 +253,7 @@ local calibration
 -- Try to find a player that is looking at that position on the monitor
 local function reconcileTouch(x, y)
     if disabled then
-        return { name = "dummy" }
+        return { name = "dummy", id = "a" }
     end
 
     local players = getPlayers()
@@ -338,27 +338,27 @@ return {
 
         monitorWidth, monitorHeight = monitor.getSize()
 
-        if fs.exists("calibration") then
-            local handle = fs.open("calibration", "r")
-            local cVals = textutils.unserialize(handle.readAll())
-            handle.close()
+        -- if fs.exists("calibration") then
+        --     local handle = fs.open("calibration", "r")
+        --     local cVals = textutils.unserialize(handle.readAll())
+        --     handle.close()
 
-            calibration = {
-                xDir        = V3.from(cVals.xDir),
-                yDir        = V3.from(cVals.yDir),
-                origin      = V3.from(cVals.origin),
-                lookPlane   = V3.from(cVals.lookPlane),
-                screenPlane = V3.from(cVals.screenPlane),
-                blockWidth  = cVals.blockWidth,
-                blockHeight = cVals.blockHeight,
-            }
+        --     calibration = {
+        --         xDir        = V3.from(cVals.xDir),
+        --         yDir        = V3.from(cVals.yDir),
+        --         origin      = V3.from(cVals.origin),
+        --         lookPlane   = V3.from(cVals.lookPlane),
+        --         screenPlane = V3.from(cVals.screenPlane),
+        --         blockWidth  = cVals.blockWidth,
+        --         blockHeight = cVals.blockHeight,
+        --     }
 
-            -- Fix blockWidthPerChar and blockHeightPerChar
-            blockWidthPerChar  = (calibration.blockWidth  - (bleedX * 2.0)) / monitorWidth
-            blockHeightPerChar = (calibration.blockHeight - (bleedY * 2.0)) / monitorHeight
-        else
-            error("No calibration file found")
-        end
+        --     -- Fix blockWidthPerChar and blockHeightPerChar
+        --     blockWidthPerChar  = (calibration.blockWidth  - (bleedX * 2.0)) / monitorWidth
+        --     blockHeightPerChar = (calibration.blockHeight - (bleedY * 2.0)) / monitorHeight
+        -- else
+        --     error("No calibration file found")
+        -- end
     end,
     reconcileTouch = reconcileTouch,
     getLookPosition = getLookPosition,

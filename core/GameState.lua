@@ -57,9 +57,9 @@ function GameState:removePlayer(playerId)
     end
 
     -- Otherwise, we need to cash out the player
-    local wallet = Wallet.getWallet(player.entity.id)
-    Krist.pay("message=Congratulations! Here are your winnings!", player.entity.name .. "@sc.kst", wallet.balance)
-    wallet.balance = 0
+    -- local wallet = Wallet.getWallet(player.entity.id)
+    -- Krist.pay("message=Congratulations! Here are your winnings!", player.entity.name .. "@sc.kst", wallet.balance)
+    -- wallet.balance = 0
 end
 
 local function waitForAnimation(uid)
